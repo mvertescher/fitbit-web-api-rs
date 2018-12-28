@@ -3,9 +3,13 @@ name = "fitbit-web-api"
 version = "0.1.0"
 authors = ["Matt Vertescher <mvertescher@gmail.com>"]
 edition = "2018"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/mvertescher/fitbit-web-api-rs"
+homepage = "https://github.com/mvertescher/fitbit-web-api-rs"
 description = """
 An API client for Fitbit's Web API.
 """
+categories = ["cli"]
 
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
