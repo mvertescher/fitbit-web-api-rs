@@ -23,6 +23,14 @@ SUBCOMMANDS:
     help       Prints this message or the help of the given subcommand(s)
 ```
 
+## Quick Start
+
+To use this client, you must have a few things:
+1. A valid [Fitbit account](https://www.fitbit.com/signup)
+2. A [registered web application](https://dev.fitbit.com/apps/new)
+  - To access the most personal information, set the `OAuth 2.0 Application Type` to `Personal`
+3. The OAuth2 `CLIENT_ID` and `CLIENT_SECRET` of [your app found here](https://dev.fitbit.com/apps)
+
 ## License
 
 Licensed under either of
