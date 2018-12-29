@@ -1,5 +1,5 @@
 # fitbit-web-api-rs
-[![Build Status](https://travis-ci.com/mvertescher/hostap-rs.svg?branch=master)](https://travis-ci.com/mvertescher/hostap-rs)
+[![Build Status](https://travis-ci.com/mvertescher/fitbit-web-api-rs.svg?branch=master)](https://travis-ci.com/mvertescher/fitbit-web-api-rs)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
