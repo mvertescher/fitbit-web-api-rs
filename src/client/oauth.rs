@@ -32,10 +32,8 @@ pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
 
     // Generate the authorization URL to which we'll redirect the user.
     let (authorize_url, csrf_state) = client.authorize_url(CsrfToken::new_random);
-    println!(
-        "Open this URL in your browser:\n{}\n",
-        authorize_url.to_string()
-    );
+    opener::open(authorize_url.to_string())
+        .expect("failed to open authorize URL");
 
     let listener = TcpListener::bind("127.0.0.1:8080").unwrap();
     for stream in listener.incoming() {
