@@ -1,0 +1,3 @@
+//! Badges
+
+pub mod get;

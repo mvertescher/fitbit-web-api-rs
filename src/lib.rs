@@ -19,6 +19,7 @@ extern crate url_serde;
 use serde_derive::Deserialize;
 
 pub mod devices;
+pub mod user;
 
 /// A Fitbit product.
 #[derive(Deserialize, Debug)]
