@@ -9,6 +9,7 @@ mod client;
 #[derive(PartialEq)]
 pub(crate) enum Command {
     GetAuthToken(String, String),
+    GetBadges,
     GetDevices,
 }
 
@@ -17,6 +18,7 @@ fn main() {
 
     match command {
         Command::GetAuthToken(id, secret) => client::get_auth_token(id, secret),
+        Command::GetBadges => client::get_badges(),
         Command::GetDevices => client::get_devices(),
     }
 }

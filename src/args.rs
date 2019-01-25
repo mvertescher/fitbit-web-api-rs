@@ -18,6 +18,8 @@ pub(super) fn parse() -> super::Command {
                     .arg(Arg::with_name("client_secret")
                          .help("The client secret of your personal app")
                          .required(true)))
+        .subcommand(SubCommand::with_name("badges")
+                    .about("Prints a list of user badges"))
         .subcommand(SubCommand::with_name("devices")
                     .about("Prints a list of currently paired devices"))
         .get_matches();
@@ -29,6 +31,7 @@ pub(super) fn parse() -> super::Command {
             let secret = auth_matches.value_of("client_secret").unwrap().to_string();
             super::Command::GetAuthToken(id, secret)
         }
+        ("badges", Some(_)) => super::Command::GetBadges,
         ("devices", Some(_)) => super::Command::GetDevices,
         ("", None) => {
             eprintln!("Please enter a valid command! See `-h` for more info!");

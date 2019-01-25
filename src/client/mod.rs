@@ -48,6 +48,13 @@ pub(super) fn get_auth_token(id: String, secret: String) {
     println!("Success! OAuth2 token recorded to {}.", TOKEN_FILE);
 }
 
+pub(super) fn get_badges() {
+    let url = user::badges::get::url();
+    let body = get(url);
+    let badges: user::badges::get::Response = serde_json::from_str(&body).unwrap();
+    println!("{}", badges);
+}
+
 pub(super) fn get_devices() {
     let url = devices::get::url();
     let body = get(url);

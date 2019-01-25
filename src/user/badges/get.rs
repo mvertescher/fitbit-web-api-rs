@@ -1,5 +1,7 @@
 //! Get a user's badges.
 
+use std::fmt;
+
 use chrono::naive::NaiveDate;
 use serde_derive::Deserialize;
 use url::Url;
@@ -13,6 +15,15 @@ pub fn url() -> Url {
 #[derive(Deserialize, Debug)]
 pub struct Response {
     pub badges: Vec<Badge>,
+}
+
+impl fmt::Display for Response {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for badge in &self.badges {
+            write!(f, "{}\n\n", badge)?;
+        }
+        Ok(())
+    }
 }
 
 /// Information about a badge a user has obtained.
@@ -41,4 +52,10 @@ pub struct Badge {
     pub short_name: String,
     pub times_achieved: usize,
     pub value: i32,
+}
+
+impl fmt::Display for Badge {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
