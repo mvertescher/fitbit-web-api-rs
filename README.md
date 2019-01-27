@@ -19,6 +19,7 @@ FLAGS:
 
 SUBCOMMANDS:
     auth       Fetch an OAuth token from Fitbit
+    badges     Prints a list of user badges
     devices    Prints a list of currently paired devices
     help       Prints this message or the help of the given subcommand(s)
 ```
