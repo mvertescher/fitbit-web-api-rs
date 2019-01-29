@@ -22,8 +22,9 @@ pub(super) fn parse() -> super::Command {
                     .about("Prints a list of user badges"))
         .subcommand(SubCommand::with_name("devices")
                     .about("Prints a list of currently paired devices"))
+        .subcommand(SubCommand::with_name("profile")
+                    .about("Print user profile information"))
         .get_matches();
-
 
     match matches.subcommand() {
         ("auth", Some(auth_matches)) => {
@@ -33,6 +34,7 @@ pub(super) fn parse() -> super::Command {
         }
         ("badges", Some(_)) => super::Command::GetBadges,
         ("devices", Some(_)) => super::Command::GetDevices,
+        ("profile", Some(_)) => super::Command::GetProfile,
         ("", None) => {
             eprintln!("Please enter a valid command! See `-h` for more info!");
             std::process::exit(1);

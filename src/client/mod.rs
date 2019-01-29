@@ -61,3 +61,10 @@ pub(super) fn get_devices() {
     let devices: devices::get::Response = serde_json::from_str(&body).unwrap();
     println!("{}", devices);
 }
+
+pub(super) fn get_profile() {
+    let url = user::profile::url();
+    let body = get(url);
+    let profile: user::profile::Response = serde_json::from_str(&body).unwrap();
+    println!("{}", profile);
+}

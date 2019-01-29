@@ -1,13 +1,17 @@
 //! User profile APIs
 
+use std::fmt;
+
 use chrono::naive::NaiveDate;
 use serde_derive::{Deserialize, Serialize};
 use url::Url;
 
 pub mod update;
 
-/// URL to get the profile for the current logged in user.
-pub const URL: &str = "https://api.fitbit.com/1/user/-/profile.json";
+/// The URL for this endpoint.
+pub fn url() -> Url {
+    Url::parse("https://api.fitbit.com/1/user/-/profile.json").unwrap()
+}
 
 /// A user profile response from a GET or POST request.
 /// Both the get and update APIs send this back as a response.
@@ -15,6 +19,13 @@ pub const URL: &str = "https://api.fitbit.com/1/user/-/profile.json";
 pub struct Response {
     /// All information about a user profile.
     pub user: User,
+}
+
+impl fmt::Display for Response {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:#?}", self)?;
+        Ok(())
+    }
 }
 
 #[derive(Deserialize, Debug)]
