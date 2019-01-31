@@ -18,6 +18,7 @@ extern crate url_serde;
 
 use serde_derive::Deserialize;
 
+pub mod activity;
 pub mod devices;
 pub mod user;
 
