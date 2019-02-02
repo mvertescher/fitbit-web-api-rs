@@ -2,6 +2,7 @@
 
 use serde_derive::{Deserialize, Serialize};
 
+pub mod goals;
 pub mod summary;
 
 #[derive(Serialize, Deserialize, Debug)]
