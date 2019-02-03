@@ -22,6 +22,23 @@ pub mod activity;
 pub mod devices;
 pub mod user;
 
+/// A user identifier used across many endpoints.
+pub enum UserId {
+    /// The current user logged in.
+    Current,
+    /// A user that is not logged in.
+    User(String),
+}
+
+impl ToString for UserId {
+    fn to_string(&self) -> String {
+        match self {
+            UserId::Current => "-".to_string(),
+            UserId::User(id) => id.clone(),
+        }
+    }
+}
+
 /// A Fitbit product.
 #[derive(Deserialize, Debug)]
 pub enum Device {

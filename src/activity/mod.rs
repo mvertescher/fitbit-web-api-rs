@@ -3,6 +3,7 @@
 use serde_derive::{Deserialize, Serialize};
 
 pub mod goals;
+pub mod lifetime_stats;
 pub mod summary;
 
 #[derive(Serialize, Deserialize, Debug)]
