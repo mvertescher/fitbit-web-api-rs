@@ -1,5 +1,7 @@
 //! Get daily activity summary.
 
+use std::fmt;
+
 use chrono::naive::NaiveDate;
 use serde_derive::Deserialize;
 use url::Url;
@@ -20,6 +22,12 @@ pub struct Response {
     pub activities: Vec<super::ActivityLog>,
     pub goals: Goals,
     pub summary: Summary,
+}
+
+impl fmt::Display for Response {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:#?}", self)
+    }
 }
 
 #[derive(Deserialize, Debug)]

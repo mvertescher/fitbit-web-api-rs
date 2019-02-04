@@ -42,6 +42,13 @@ fn get(url: url::Url) -> String {
     body
 }
 
+pub(super) fn get_activity_summary() {
+    let url = activity::summary::url_from_date("-", chrono::Local::today().naive_local());
+    let body = get(url);
+    let response: activity::summary::Response = serde_json::from_str(&body).unwrap();
+    println!("{}", response);
+}
+
 pub(super) fn get_auth_token(id: String, secret: String) {
     let token = oauth::get_token(id, secret);
     write_auth_token(token);

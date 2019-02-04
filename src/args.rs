@@ -10,6 +10,8 @@ pub(super) fn parse() -> super::Command {
         .about(crate_description!())
         .version(crate_version!())
         .author(crate_authors!())
+        .subcommand(SubCommand::with_name("activity_summary")
+                    .about("Print a summary of the user's recent activities"))
         .subcommand(SubCommand::with_name("auth")
                     .about("Fetch an OAuth token from Fitbit")
                     .arg(Arg::with_name("client_id")
@@ -27,6 +29,7 @@ pub(super) fn parse() -> super::Command {
         .get_matches();
 
     match matches.subcommand() {
+        ("activity_summary", Some(_)) => super::Command::GetActivitySummary,
         ("auth", Some(auth_matches)) => {
             let id = auth_matches.value_of("client_id").unwrap().to_string();
             let secret = auth_matches.value_of("client_secret").unwrap().to_string();

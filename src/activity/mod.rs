@@ -1,5 +1,7 @@
 //! Definitions for activity and exercise logs
 
+use std::fmt;
+
 use serde_derive::{Deserialize, Serialize};
 
 pub mod goals;
@@ -21,4 +23,10 @@ pub struct ActivityLog {
     name: String,
     start_time: String,
     steps: usize,
+}
+
+impl fmt::Display for ActivityLog {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
