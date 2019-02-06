@@ -3,10 +3,11 @@
 use super::Command;
 
 use clap::{crate_name, crate_description, crate_version, crate_authors};
-use clap::{App, Arg, SubCommand};
+use clap::{App, Arg, SubCommand, AppSettings};
 
 pub(super) fn parse() -> super::Command {
-    const ACTIVITY_SUMMARY: &'static str = "activity_summary";
+    const ACTIVITY: &'static str = "activity";
+    const ACTIVITY_SUMMARY: &'static str = "summary";
     const AUTH: &'static str = "auth";
     const BADGES: &'static str = "badges";
     const DEVICES: &'static str = "devices";
@@ -16,8 +17,11 @@ pub(super) fn parse() -> super::Command {
         .about(crate_description!())
         .version(crate_version!())
         .author(crate_authors!())
-        .subcommand(SubCommand::with_name(ACTIVITY_SUMMARY)
-                    .about("Print a summary of the user's recent activities"))
+        .subcommand(SubCommand::with_name(ACTIVITY)
+                    .about("User activity data commands")
+                    .setting(AppSettings::SubcommandRequiredElseHelp)
+                    .subcommand(SubCommand::with_name(ACTIVITY_SUMMARY)
+                        .about("Print a summary of the user's recent activities")))
         .subcommand(SubCommand::with_name(AUTH)
                     .about("Fetch an OAuth token from Fitbit")
                     .arg(Arg::with_name("client_id")
@@ -35,7 +39,13 @@ pub(super) fn parse() -> super::Command {
         .get_matches();
 
     match matches.subcommand() {
-        (ACTIVITY_SUMMARY, Some(_)) => Command::GetActivitySummary,
+        (ACTIVITY, Some(activity_matches)) => {
+            match activity_matches.subcommand() {
+                (ACTIVITY_SUMMARY, Some(_)) => Command::GetActivitySummary,
+                ("", None) => invalid_command_exit(),
+                _ => unreachable!(),
+            }
+        }
         (AUTH, Some(auth_matches)) => {
             let id = auth_matches.value_of("client_id").unwrap().to_string();
             let secret = auth_matches.value_of("client_secret").unwrap().to_string();
@@ -44,10 +54,12 @@ pub(super) fn parse() -> super::Command {
         (BADGES, Some(_)) => Command::GetBadges,
         (DEVICES, Some(_)) => Command::GetDevices,
         (PROFILE, Some(_)) => Command::GetProfile,
-        ("", None) => {
-            eprintln!("Please enter a valid command! See `-h` for more info!");
-            std::process::exit(1);
-        }
+        ("", None) => invalid_command_exit(),
         _ => unreachable!(),
     }
+}
+
+fn invalid_command_exit() -> ! {
+    eprintln!("Please enter a valid command! See `-h` for more info!");
+    std::process::exit(1);
 }
