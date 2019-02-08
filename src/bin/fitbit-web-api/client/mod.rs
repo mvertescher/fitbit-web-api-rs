@@ -42,6 +42,13 @@ fn get(url: url::Url) -> String {
     body
 }
 
+pub(super) fn get_activity_goals() {
+    let url = activity::goals::url();
+    let body = get(url);
+    let response: activity::goals::Response = serde_json::from_str(&body).unwrap();
+    println!("{}", response);
+}
+
 pub(super) fn get_activity_summary() {
     let url = activity::summary::url_from_date("-", chrono::Local::today().naive_local());
     let body = get(url);
