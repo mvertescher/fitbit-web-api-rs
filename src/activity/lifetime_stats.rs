@@ -1,12 +1,14 @@
 //! Get lifetime statistics.
 
+use std::fmt;
+
 use crate::UserId;
 
 use chrono::naive::NaiveDate;
 use serde_derive::Deserialize;
 use url::Url;
 
-pub fn url_from_user_id(user_id: UserId) -> Url {
+pub fn url(user_id: UserId) -> Url {
     Url::parse(&format!(
         "https://api.fitbit.com/1/user/{}/activities.json",
         &user_id.to_string(),
@@ -18,6 +20,12 @@ pub fn url_from_user_id(user_id: UserId) -> Url {
 pub struct Response {
     pub best: Option<BestStats>,
     pub lifetime: LifetimeStats,
+}
+
+impl fmt::Display for Response {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:#?}", self)
+    }
 }
 
 #[derive(Deserialize, Debug)]

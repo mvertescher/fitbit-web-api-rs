@@ -49,6 +49,13 @@ pub(super) fn get_activity_goals() {
     println!("{}", response);
 }
 
+pub(super) fn get_activity_lifetime_stats() {
+    let url = activity::lifetime_stats::url(UserId::Current);
+    let body = get(url);
+    let response: activity::lifetime_stats::Response = serde_json::from_str(&body).unwrap();
+    println!("{}", response);
+}
+
 pub(super) fn get_activity_summary() {
     let url = activity::summary::url_from_date("-", chrono::Local::today().naive_local());
     let body = get(url);

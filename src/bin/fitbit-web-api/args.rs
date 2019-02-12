@@ -8,6 +8,7 @@ use clap::{App, Arg, SubCommand, AppSettings};
 pub(super) fn parse() -> super::Command {
     const ACTIVITY: &'static str = "activity";
     const ACTIVITY_GOALS: &'static str = "goals";
+    const ACTIVITY_LIFETIME_STATS: &'static str = "lifetime_stats";
     const ACTIVITY_SUMMARY: &'static str = "summary";
     const AUTH: &'static str = "auth";
     const BADGES: &'static str = "badges";
@@ -23,6 +24,8 @@ pub(super) fn parse() -> super::Command {
                     .setting(AppSettings::SubcommandRequiredElseHelp)
                     .subcommand(SubCommand::with_name(ACTIVITY_GOALS)
                         .about("Print a summary of the user's activity goals"))
+                    .subcommand(SubCommand::with_name(ACTIVITY_LIFETIME_STATS)
+                        .about("Print a summary of the user's lifetime activity statistics"))
                     .subcommand(SubCommand::with_name(ACTIVITY_SUMMARY)
                         .about("Print a summary of the user's recent activities")))
         .subcommand(SubCommand::with_name(AUTH)
@@ -45,6 +48,7 @@ pub(super) fn parse() -> super::Command {
         (ACTIVITY, Some(activity_matches)) => {
             match activity_matches.subcommand() {
                 (ACTIVITY_GOALS, Some(_)) => Command::GetActivityGoals,
+                (ACTIVITY_LIFETIME_STATS, Some(_)) => Command::GetActivityLifetimeStats,
                 (ACTIVITY_SUMMARY, Some(_)) => Command::GetActivitySummary,
                 ("", None) => invalid_command_exit(),
                 _ => unreachable!(),
