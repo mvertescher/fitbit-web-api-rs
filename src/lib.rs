@@ -56,3 +56,24 @@ pub enum Device {
     #[doc(hidden)]
     __Nonexhaustive,
 }
+
+/// Possible period ranges for heart rate data.
+pub enum Period {
+    OneDay,
+    SevenDays,
+    ThirtyDays,
+    OneWeek,
+    OneMonth,
+}
+
+impl ToString for Period {
+    fn to_string(&self) -> String {
+        match self {
+            Period::OneDay => "1d".to_string(),
+            Period::SevenDays => "7d".to_string(),
+            Period::ThirtyDays => "30d".to_string(),
+            Period::OneWeek => "1w".to_string(),
+            Period::OneMonth => "1m".to_string(),
+        }
+    }
+}

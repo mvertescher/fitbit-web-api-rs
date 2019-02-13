@@ -7,6 +7,7 @@ use serde_derive::{Deserialize, Serialize};
 pub mod goals;
 pub mod lifetime_stats;
 pub mod summary;
+pub mod time_series;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
