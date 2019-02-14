@@ -4,9 +4,11 @@ use crate::{UserId, Period};
 
 use chrono::naive::NaiveDate;
 use serde_derive::Deserialize;
+use strum_macros::*;
 use url::Url;
 
-// TODO: Enumerate tracker time series data
+#[derive(ToString)]
+#[strum(serialize_all = "camel_case")]
 pub enum Resource {
     Calories,
     CaloriesBMR,
@@ -19,25 +21,6 @@ pub enum Resource {
     MinutesFairlyActive,
     MinutesVeryActive,
     ActivityCalories,
-}
-
-// TODO: Derive this somehow
-impl ToString for Resource {
-    fn to_string(&self) -> String {
-        match self {
-            Resource::Calories => "calories",
-            Resource::CaloriesBMR => "caloriesBMR",
-            Resource::Steps => "steps",
-            Resource::Distance => "distance",
-            Resource::Floors => "floors",
-            Resource::Elevation => "elevation",
-            Resource::MinutesSedentary => "minutesSedentary",
-            Resource::MinutesLightlyActive => "minutesLightlyActive",
-            Resource::MinutesFairlyActive => "minutesFairlyActive",
-            Resource::MinutesVeryActive => "minutesVeryActive",
-            Resource::ActivityCalories => "activityCalories",
-        }.to_string()
-    }
 }
 
 /// Generate the request URL from a resource.
