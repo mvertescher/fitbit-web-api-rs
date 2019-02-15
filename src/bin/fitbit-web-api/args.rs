@@ -10,6 +10,18 @@ pub(super) fn parse() -> super::Command {
     const ACTIVITY_GOALS: &'static str = "goals";
     const ACTIVITY_LIFETIME_STATS: &'static str = "lifetime_stats";
     const ACTIVITY_SUMMARY: &'static str = "summary";
+    const ACTIVITY_TS: &'static str = "time_series";
+    const ACTIVITY_TS_CALORIES: &'static str = "calories";
+    const ACTIVITY_TS_CALORIES_BMR: &'static str = "calories_bmr";
+    const ACTIVITY_TS_STEPS: &'static str = "steps";
+    const ACTIVITY_TS_DISTANCE: &'static str = "distance";
+    const ACTIVITY_TS_FLOORS: &'static str = "floors";
+    const ACTIVITY_TS_ELEVATION: &'static str = "elevation";
+    const ACTIVITY_TS_SEDENTARY: &'static str = "sedentary";
+    const ACTIVITY_TS_LIGHTLY_ACTIVE: &'static str = "lightly_active";
+    const ACTIVITY_TS_FAIRLY_ACTIVE: &'static str = "fairly_active";
+    const ACTIVITY_TS_VERY_ACTIVE: &'static str = "very_active";
+    const ACTIVITY_TS_ACTIVITY_CALORIES: &'static str = "activity_calories";
     const AUTH: &'static str = "auth";
     const BADGES: &'static str = "badges";
     const DEVICES: &'static str = "devices";
@@ -27,7 +39,34 @@ pub(super) fn parse() -> super::Command {
                     .subcommand(SubCommand::with_name(ACTIVITY_LIFETIME_STATS)
                         .about("Print a summary of the user's lifetime activity statistics"))
                     .subcommand(SubCommand::with_name(ACTIVITY_SUMMARY)
-                        .about("Print a summary of the user's recent activities")))
+                        .about("Print a summary of the user's recent activities"))
+                    .subcommand(SubCommand::with_name(ACTIVITY_TS)
+                        .about("User activity time series data commands")
+                        .setting(AppSettings::SubcommandRequiredElseHelp)
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_CALORIES)
+                            .about("Print calories time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_CALORIES_BMR)
+                            .about("Print calories BMR time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_STEPS)
+                            .about("Print steps time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_DISTANCE)
+                            .about("Print distance time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_FLOORS)
+                            .about("Print floors time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_ELEVATION)
+                            .about("Print elevation time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_SEDENTARY)
+                            .about("Print minutes sedentary time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_LIGHTLY_ACTIVE)
+                            .about("Print lightly active time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_FAIRLY_ACTIVE)
+                            .about("Print fairly active time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_VERY_ACTIVE)
+                            .about("Print very active time series data"))
+                        .subcommand(SubCommand::with_name(ACTIVITY_TS_ACTIVITY_CALORIES)
+                            .about("Print activity calories time series data"))
+                        )
+                    )
         .subcommand(SubCommand::with_name(AUTH)
                     .about("Fetch an OAuth token from Fitbit")
                     .arg(Arg::with_name("client_id")
@@ -50,6 +89,7 @@ pub(super) fn parse() -> super::Command {
                 (ACTIVITY_GOALS, Some(_)) => Command::GetActivityGoals,
                 (ACTIVITY_LIFETIME_STATS, Some(_)) => Command::GetActivityLifetimeStats,
                 (ACTIVITY_SUMMARY, Some(_)) => Command::GetActivitySummary,
+                (ACTIVITY_TS, Some(_activity_ts_matches)) => invalid_command_exit(),
                 ("", None) => invalid_command_exit(),
                 _ => unreachable!(),
             }
