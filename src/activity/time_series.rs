@@ -45,112 +45,32 @@ pub struct Entry {
     pub value: String,
 }
 
-pub mod calories {
-    use serde_derive::Deserialize;
+macro_rules! endpoint {
+    ($mod:ident, $rename:expr) => {
+        pub mod $mod {
+            use serde_derive::Deserialize;
 
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-calories")]
-        pub series: Vec<super::Entry>,
-    }
+            #[derive(Deserialize, Debug)]
+            pub struct Response {
+                #[serde(rename = $rename)]
+                pub series: Vec<super::Entry>,
+            }
+        }
+    };
+
+    ($mod:ident) => {
+        endpoint!($mod, stringify!(activities-$mod));
+    };
 }
 
-pub mod calories_bmr {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-caloriesBMR")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod steps {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-steps")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod distance {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-distance")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod floors {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-floors")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod elevation {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-elevation")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod minutes_sedentary {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-minutesSedentary")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod minutes_lightly_active {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-minutesLightlyActive")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod minutes_fairly_active {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-minutesFairlyActive")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod minutes_very_active {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-minutesVeryActive")]
-        pub series: Vec<super::Entry>,
-    }
-}
-
-pub mod activity_calories {
-    use serde_derive::Deserialize;
-
-    #[derive(Deserialize, Debug)]
-    pub struct Response {
-        #[serde(rename = "activities-activityCalories")]
-        pub series: Vec<super::Entry>,
-    }
-}
+endpoint!(calories);
+endpoint!(calories_bmr, "activities-caloriesBMR");
+endpoint!(steps);
+endpoint!(distance);
+endpoint!(floors);
+endpoint!(elevation);
+endpoint!(minutes_sedentary, "activities-minutesSedentary");
+endpoint!(minutes_lightly_active, "activities-minutesLightlyActive");
+endpoint!(minutes_fairly_active, "activities-minutesFairlyActive");
+endpoint!(minutes_very_active, "activities-minutesVeryActive");
+endpoint!(activity_calories, "activities-activityCalories");
