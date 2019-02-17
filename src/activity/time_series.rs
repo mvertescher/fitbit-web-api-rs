@@ -7,7 +7,7 @@ use serde_derive::Deserialize;
 use strum_macros::*;
 use url::Url;
 
-#[derive(ToString)]
+#[derive(Debug, PartialEq, ToString)]
 #[strum(serialize_all = "camel_case")]
 pub enum Resource {
     Calories,
@@ -16,10 +16,10 @@ pub enum Resource {
     Distance,
     Floors,
     Elevation,
-    MinutesSedentary,
-    MinutesLightlyActive,
-    MinutesFairlyActive,
-    MinutesVeryActive,
+    Sedentary,
+    LightlyActive,
+    FairlyActive,
+    VeryActive,
     ActivityCalories,
 }
 

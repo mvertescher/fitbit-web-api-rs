@@ -89,7 +89,24 @@ pub(super) fn parse() -> super::Command {
                 (ACTIVITY_GOALS, Some(_)) => Command::GetActivityGoals,
                 (ACTIVITY_LIFETIME_STATS, Some(_)) => Command::GetActivityLifetimeStats,
                 (ACTIVITY_SUMMARY, Some(_)) => Command::GetActivitySummary,
-                (ACTIVITY_TS, Some(_activity_ts_matches)) => invalid_command_exit(),
+                (ACTIVITY_TS, Some(activity_ts_matches)) => {
+                    use fitbit_web_api::activity::time_series::Resource;
+                    match activity_ts_matches.subcommand() {
+                        (ACTIVITY_TS_CALORIES, Some(_)) => Command::GetActivityTimeSeries(Resource::Calories),
+                        (ACTIVITY_TS_CALORIES_BMR, Some(_)) => Command::GetActivityTimeSeries(Resource::CaloriesBMR),
+                        (ACTIVITY_TS_STEPS, Some(_)) => Command::GetActivityTimeSeries(Resource::Steps),
+                        (ACTIVITY_TS_DISTANCE, Some(_)) => Command::GetActivityTimeSeries(Resource::Distance),
+                        (ACTIVITY_TS_FLOORS, Some(_)) => Command::GetActivityTimeSeries(Resource::Floors),
+                        (ACTIVITY_TS_ELEVATION, Some(_)) => Command::GetActivityTimeSeries(Resource::Elevation),
+                        (ACTIVITY_TS_SEDENTARY, Some(_)) => Command::GetActivityTimeSeries(Resource::Sedentary),
+                        (ACTIVITY_TS_LIGHTLY_ACTIVE, Some(_)) => Command::GetActivityTimeSeries(Resource::LightlyActive),
+                        (ACTIVITY_TS_FAIRLY_ACTIVE, Some(_)) => Command::GetActivityTimeSeries(Resource::FairlyActive),
+                        (ACTIVITY_TS_VERY_ACTIVE, Some(_)) => Command::GetActivityTimeSeries(Resource::VeryActive),
+                        (ACTIVITY_TS_ACTIVITY_CALORIES, Some(_)) => Command::GetActivityTimeSeries(Resource::ActivityCalories),
+                        ("", None) => invalid_command_exit(),
+                        _ => unreachable!(),
+                    }
+                }
                 ("", None) => invalid_command_exit(),
                 _ => unreachable!(),
             }

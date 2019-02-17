@@ -56,6 +56,10 @@ pub(super) fn get_activity_lifetime_stats() {
     println!("{}", response);
 }
 
+pub(super) fn get_activity_time_series(_: activity::time_series::Resource) {
+    // TODO
+}
+
 pub(super) fn get_activity_summary() {
     let url = activity::summary::url_from_date("-", chrono::Local::today().naive_local());
     let body = get(url);
