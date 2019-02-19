@@ -20,6 +20,7 @@ use serde_derive::Deserialize;
 
 pub mod activity;
 pub mod devices;
+pub mod heart_rate;
 pub mod user;
 
 /// A user identifier used across many endpoints.
