@@ -24,7 +24,7 @@ pub enum Resource {
 }
 
 /// Generate the request URL from a resource.
-pub fn url_from_date_and_period(user_id: UserId, resource: Resource, start: NaiveDate,
+pub fn url_from_date_and_period(user_id: UserId, resource: &Resource, start: NaiveDate,
                                 period: Period)
     -> Url
 {
@@ -48,12 +48,20 @@ pub struct Entry {
 macro_rules! endpoint {
     ($mod:ident, $rename:expr) => {
         pub mod $mod {
+            use std::fmt;
+
             use serde_derive::Deserialize;
 
             #[derive(Deserialize, Debug)]
             pub struct Response {
                 #[serde(rename = $rename)]
                 pub series: Vec<super::Entry>,
+            }
+
+            impl fmt::Display for Response {
+                fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                    write!(f, "{:#?}", self)
+                }
             }
         }
     };
