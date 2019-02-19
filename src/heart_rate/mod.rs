@@ -2,6 +2,7 @@
 
 use serde_derive::Deserialize;
 
+pub mod intraday_time_series;
 pub mod time_series;
 
 #[derive(Deserialize, Debug)]
