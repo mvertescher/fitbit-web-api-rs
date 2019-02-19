@@ -8,18 +8,24 @@ use strum_macros::*;
 use url::Url;
 
 #[derive(Debug, PartialEq, ToString)]
-#[strum(serialize_all = "camel_case")]
+#[strum(serialize_all = "snake_case")]
 pub enum Resource {
     Calories,
+    #[strum(serialize="caloriesBMR")]
     CaloriesBMR,
     Steps,
     Distance,
     Floors,
     Elevation,
+    #[strum(serialize="minutesSedentary")]
     Sedentary,
+    #[strum(serialize="minutesLightlyActive")]
     LightlyActive,
+    #[strum(serialize="minutesFairlyActive")]
     FairlyActive,
+    #[strum(serialize="minutesVeryActive")]
     VeryActive,
+    #[strum(serialize="activityCalories")]
     ActivityCalories,
 }
 
@@ -65,18 +71,14 @@ macro_rules! endpoint {
             }
         }
     };
-
-    ($mod:ident) => {
-        endpoint!($mod, stringify!(activities-$mod));
-    };
 }
 
-endpoint!(calories);
+endpoint!(calories, "activities-calories");
 endpoint!(calories_bmr, "activities-caloriesBMR");
-endpoint!(steps);
-endpoint!(distance);
-endpoint!(floors);
-endpoint!(elevation);
+endpoint!(steps, "activities-steps");
+endpoint!(distance, "activities-distance");
+endpoint!(floors, "activities-floors");
+endpoint!(elevation, "activities-elevation");
 endpoint!(minutes_sedentary, "activities-minutesSedentary");
 endpoint!(minutes_lightly_active, "activities-minutesLightlyActive");
 endpoint!(minutes_fairly_active, "activities-minutesFairlyActive");

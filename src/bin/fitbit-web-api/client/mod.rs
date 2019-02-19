@@ -37,7 +37,7 @@ fn get(url: url::Url) -> String {
 
     let body = res.text().unwrap();
     let v: serde_json::Value = serde_json::from_str(&body).unwrap();
-    info!("{:#?}", v);
+    info!("{:?}", v);
 
     body
 }
