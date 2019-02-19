@@ -33,7 +33,16 @@ fn get(url: url::Url) -> String {
 
     let mut res = client.get(url).bearer_auth(token).send().unwrap();
     let status = res.status();
-    assert!(status.is_success(), format!("Failure status code: {}", status));
+    if !status.is_success() {
+        eprintln!("Bad HTTP status code: {}", status);
+        match status {
+            reqwest::StatusCode::UNAUTHORIZED =>  {
+                eprintln!("Check that your API token is correct?");
+            }
+            _ => (),
+        };
+        std::process::exit(1);
+    };
 
     let body = res.text().unwrap();
     let v: serde_json::Value = serde_json::from_str(&body).unwrap();
