@@ -19,6 +19,7 @@ pub(crate) enum Command {
 }
 
 fn main() {
+    pretty_env_logger::init();
     let command = args::parse();
 
     match command {
