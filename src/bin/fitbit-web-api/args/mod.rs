@@ -5,6 +5,8 @@ use super::Command;
 use clap::{crate_name, crate_description, crate_version, crate_authors};
 use clap::{App, Arg, SubCommand, AppSettings};
 
+mod heart_rate;
+
 pub(super) fn parse() -> super::Command {
     const ACTIVITY: &'static str = "activity";
     const ACTIVITY_GOALS: &'static str = "goals";
@@ -79,6 +81,7 @@ pub(super) fn parse() -> super::Command {
                     .about("Prints a list of user badges"))
         .subcommand(SubCommand::with_name("devices")
                     .about("Prints a list of currently paired devices"))
+        .subcommand(heart_rate::app())
         .subcommand(SubCommand::with_name(PROFILE)
                     .about("Print user profile information"))
         .get_matches();
