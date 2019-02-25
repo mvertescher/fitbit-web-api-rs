@@ -119,6 +119,16 @@ pub(super) fn get_devices() {
     println!("{}", devices);
 }
 
+pub(super) fn get_hr_time_series() {
+    // TODO
+    println!("get_hr_time_series");
+}
+
+pub(super) fn get_hr_intraday_time_series() {
+    // TODO
+    println!("get_hr_intraday_time_series");
+}
+
 pub(super) fn get_profile() {
     let url = user::profile::url();
     let body = get(url);

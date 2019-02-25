@@ -121,13 +121,14 @@ pub(super) fn parse() -> super::Command {
         }
         (BADGES, Some(_)) => Command::GetBadges,
         (DEVICES, Some(_)) => Command::GetDevices,
+        (heart_rate::BASE, Some(m)) => heart_rate::get_command(m),
         (PROFILE, Some(_)) => Command::GetProfile,
         ("", None) => invalid_command_exit(),
         _ => unreachable!(),
     }
 }
 
-fn invalid_command_exit() -> ! {
+pub(crate) fn invalid_command_exit() -> ! {
     eprintln!("Please enter a valid command! See `-h` for more info!");
     std::process::exit(1);
 }

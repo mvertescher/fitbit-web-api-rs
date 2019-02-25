@@ -15,6 +15,8 @@ pub(crate) enum Command {
     GetAuthToken(String, String),
     GetBadges,
     GetDevices,
+    GetHrIntradayTimeSeries,
+    GetHrTimeSeries,
     GetProfile,
 }
 
@@ -30,6 +32,8 @@ fn main() {
         Command::GetAuthToken(id, secret) => client::get_auth_token(id, secret),
         Command::GetBadges => client::get_badges(),
         Command::GetDevices => client::get_devices(),
+        Command::GetHrTimeSeries => client::get_hr_time_series(),
+        Command::GetHrIntradayTimeSeries => client::get_hr_intraday_time_series(),
         Command::GetProfile => client::get_profile(),
     }
 }
