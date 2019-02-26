@@ -3,27 +3,12 @@
 use super::Command;
 
 use clap::{crate_name, crate_description, crate_version, crate_authors};
-use clap::{App, Arg, SubCommand, AppSettings};
+use clap::{App, Arg, SubCommand};
 
+mod activity;
 mod heart_rate;
 
 pub(super) fn parse() -> super::Command {
-    const ACTIVITY: &'static str = "activity";
-    const ACTIVITY_GOALS: &'static str = "goals";
-    const ACTIVITY_LIFETIME_STATS: &'static str = "lifetime_stats";
-    const ACTIVITY_SUMMARY: &'static str = "summary";
-    const ACTIVITY_TS: &'static str = "time_series";
-    const ACTIVITY_TS_CALORIES: &'static str = "calories";
-    const ACTIVITY_TS_CALORIES_BMR: &'static str = "calories_bmr";
-    const ACTIVITY_TS_STEPS: &'static str = "steps";
-    const ACTIVITY_TS_DISTANCE: &'static str = "distance";
-    const ACTIVITY_TS_FLOORS: &'static str = "floors";
-    const ACTIVITY_TS_ELEVATION: &'static str = "elevation";
-    const ACTIVITY_TS_SEDENTARY: &'static str = "sedentary";
-    const ACTIVITY_TS_LIGHTLY_ACTIVE: &'static str = "lightly_active";
-    const ACTIVITY_TS_FAIRLY_ACTIVE: &'static str = "fairly_active";
-    const ACTIVITY_TS_VERY_ACTIVE: &'static str = "very_active";
-    const ACTIVITY_TS_ACTIVITY_CALORIES: &'static str = "activity_calories";
     const AUTH: &'static str = "auth";
     const BADGES: &'static str = "badges";
     const DEVICES: &'static str = "devices";
@@ -33,42 +18,7 @@ pub(super) fn parse() -> super::Command {
         .about(crate_description!())
         .version(crate_version!())
         .author(crate_authors!())
-        .subcommand(SubCommand::with_name(ACTIVITY)
-                    .about("User activity data commands")
-                    .setting(AppSettings::SubcommandRequiredElseHelp)
-                    .subcommand(SubCommand::with_name(ACTIVITY_GOALS)
-                        .about("Print a summary of the user's activity goals"))
-                    .subcommand(SubCommand::with_name(ACTIVITY_LIFETIME_STATS)
-                        .about("Print a summary of the user's lifetime activity statistics"))
-                    .subcommand(SubCommand::with_name(ACTIVITY_SUMMARY)
-                        .about("Print a summary of the user's recent activities"))
-                    .subcommand(SubCommand::with_name(ACTIVITY_TS)
-                        .about("User activity time series data commands")
-                        .setting(AppSettings::SubcommandRequiredElseHelp)
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_CALORIES)
-                            .about("Print calories time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_CALORIES_BMR)
-                            .about("Print calories BMR time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_STEPS)
-                            .about("Print steps time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_DISTANCE)
-                            .about("Print distance time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_FLOORS)
-                            .about("Print floors time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_ELEVATION)
-                            .about("Print elevation time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_SEDENTARY)
-                            .about("Print minutes sedentary time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_LIGHTLY_ACTIVE)
-                            .about("Print lightly active time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_FAIRLY_ACTIVE)
-                            .about("Print fairly active time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_VERY_ACTIVE)
-                            .about("Print very active time series data"))
-                        .subcommand(SubCommand::with_name(ACTIVITY_TS_ACTIVITY_CALORIES)
-                            .about("Print activity calories time series data"))
-                        )
-                    )
+        .subcommand(activity::app())
         .subcommand(SubCommand::with_name(AUTH)
                     .about("Fetch an OAuth token from Fitbit")
                     .arg(Arg::with_name("client_id")
@@ -87,33 +37,7 @@ pub(super) fn parse() -> super::Command {
         .get_matches();
 
     match matches.subcommand() {
-        (ACTIVITY, Some(activity_matches)) => {
-            match activity_matches.subcommand() {
-                (ACTIVITY_GOALS, Some(_)) => Command::GetActivityGoals,
-                (ACTIVITY_LIFETIME_STATS, Some(_)) => Command::GetActivityLifetimeStats,
-                (ACTIVITY_SUMMARY, Some(_)) => Command::GetActivitySummary,
-                (ACTIVITY_TS, Some(activity_ts_matches)) => {
-                    use fitbit_web_api::activity::time_series::Resource;
-                    match activity_ts_matches.subcommand() {
-                        (ACTIVITY_TS_CALORIES, Some(_)) => Command::GetActivityTimeSeries(Resource::Calories),
-                        (ACTIVITY_TS_CALORIES_BMR, Some(_)) => Command::GetActivityTimeSeries(Resource::CaloriesBMR),
-                        (ACTIVITY_TS_STEPS, Some(_)) => Command::GetActivityTimeSeries(Resource::Steps),
-                        (ACTIVITY_TS_DISTANCE, Some(_)) => Command::GetActivityTimeSeries(Resource::Distance),
-                        (ACTIVITY_TS_FLOORS, Some(_)) => Command::GetActivityTimeSeries(Resource::Floors),
-                        (ACTIVITY_TS_ELEVATION, Some(_)) => Command::GetActivityTimeSeries(Resource::Elevation),
-                        (ACTIVITY_TS_SEDENTARY, Some(_)) => Command::GetActivityTimeSeries(Resource::Sedentary),
-                        (ACTIVITY_TS_LIGHTLY_ACTIVE, Some(_)) => Command::GetActivityTimeSeries(Resource::LightlyActive),
-                        (ACTIVITY_TS_FAIRLY_ACTIVE, Some(_)) => Command::GetActivityTimeSeries(Resource::FairlyActive),
-                        (ACTIVITY_TS_VERY_ACTIVE, Some(_)) => Command::GetActivityTimeSeries(Resource::VeryActive),
-                        (ACTIVITY_TS_ACTIVITY_CALORIES, Some(_)) => Command::GetActivityTimeSeries(Resource::ActivityCalories),
-                        ("", None) => invalid_command_exit(),
-                        _ => unreachable!(),
-                    }
-                }
-                ("", None) => invalid_command_exit(),
-                _ => unreachable!(),
-            }
-        }
+        (activity::BASE, Some(m)) => activity::get_command(m),
         (AUTH, Some(auth_matches)) => {
             let id = auth_matches.value_of("client_id").unwrap().to_string();
             let secret = auth_matches.value_of("client_secret").unwrap().to_string();
