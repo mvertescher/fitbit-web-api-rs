@@ -18,6 +18,9 @@ pub(crate) enum Command {
     GetHrIntradayTimeSeries,
     GetHrTimeSeries,
     GetProfile,
+    GetSleepGoal,
+    GetSleepList,
+    GetSleepLog,
 }
 
 fn main() {
@@ -35,5 +38,6 @@ fn main() {
         Command::GetHrTimeSeries => client::get_hr_time_series(),
         Command::GetHrIntradayTimeSeries => client::get_hr_intraday_time_series(),
         Command::GetProfile => client::get_profile(),
+        _ => panic!("unsupported command"),
     }
 }

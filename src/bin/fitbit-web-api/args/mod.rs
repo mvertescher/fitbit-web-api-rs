@@ -7,6 +7,7 @@ use clap::{App, Arg, SubCommand};
 
 mod activity;
 mod heart_rate;
+mod sleep;
 
 pub(super) fn parse() -> super::Command {
     const AUTH: &'static str = "auth";
@@ -34,6 +35,7 @@ pub(super) fn parse() -> super::Command {
         .subcommand(heart_rate::app())
         .subcommand(SubCommand::with_name(PROFILE)
                     .about("Print user profile information"))
+        .subcommand(sleep::app())
         .get_matches();
 
     match matches.subcommand() {
@@ -47,6 +49,7 @@ pub(super) fn parse() -> super::Command {
         (DEVICES, Some(_)) => Command::GetDevices,
         (heart_rate::BASE, Some(m)) => heart_rate::get_command(m),
         (PROFILE, Some(_)) => Command::GetProfile,
+        (sleep::BASE, Some(m)) => sleep::get_command(m),
         ("", None) => invalid_command_exit(),
         _ => unreachable!(),
     }
