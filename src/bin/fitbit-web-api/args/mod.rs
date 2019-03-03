@@ -3,14 +3,14 @@
 use super::Command;
 
 use clap::{crate_name, crate_description, crate_version, crate_authors};
-use clap::{App, Arg, SubCommand};
+use clap::{App, SubCommand};
 
 mod activity;
+mod auth;
 mod heart_rate;
 mod sleep;
 
 pub(super) fn parse() -> super::Command {
-    const AUTH: &'static str = "auth";
     const BADGES: &'static str = "badges";
     const DEVICES: &'static str = "devices";
     const PROFILE: &'static str = "profile";
@@ -20,14 +20,7 @@ pub(super) fn parse() -> super::Command {
         .version(crate_version!())
         .author(crate_authors!())
         .subcommand(activity::app())
-        .subcommand(SubCommand::with_name(AUTH)
-                    .about("Fetch an OAuth token from Fitbit")
-                    .arg(Arg::with_name("client_id")
-                         .help("The client ID of your personal app")
-                         .required(true))
-                    .arg(Arg::with_name("client_secret")
-                         .help("The client secret of your personal app")
-                         .required(true)))
+        .subcommand(auth::app())
         .subcommand(SubCommand::with_name(BADGES)
                     .about("Prints a list of user badges"))
         .subcommand(SubCommand::with_name("devices")
@@ -40,11 +33,7 @@ pub(super) fn parse() -> super::Command {
 
     match matches.subcommand() {
         (activity::BASE, Some(m)) => activity::get_command(m),
-        (AUTH, Some(auth_matches)) => {
-            let id = auth_matches.value_of("client_id").unwrap().to_string();
-            let secret = auth_matches.value_of("client_secret").unwrap().to_string();
-            Command::GetAuthToken(id, secret)
-        }
+        (auth::BASE, Some(m)) => auth::get_command(m),
         (BADGES, Some(_)) => Command::GetBadges,
         (DEVICES, Some(_)) => Command::GetDevices,
         (heart_rate::BASE, Some(m)) => heart_rate::get_command(m),
