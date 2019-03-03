@@ -28,10 +28,10 @@ fn main() {
     let command = args::parse();
 
     match command {
-        Command::GetActivityGoals => client::get_activity_goals(),
-        Command::GetActivityLifetimeStats => client::get_activity_lifetime_stats(),
-        Command::GetActivitySummary => client::get_activity_summary(),
-        Command::GetActivityTimeSeries(resource) => client::get_activity_time_series(resource),
+        Command::GetActivityGoals => client::activity::get_goals(),
+        Command::GetActivityLifetimeStats => client::activity::get_lifetime_stats(),
+        Command::GetActivitySummary => client::activity::get_summary(),
+        Command::GetActivityTimeSeries(resource) => client::activity::get_time_series(resource),
         Command::GetAuthToken(id, secret) => client::get_auth_token(id, secret),
         Command::GetBadges => client::get_badges(),
         Command::GetDevices => client::get_devices(),
