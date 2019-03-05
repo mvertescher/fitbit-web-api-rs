@@ -1,5 +1,7 @@
 //! Get heart rate time series data.
 
+use std::fmt;
+
 use chrono::naive::NaiveDate;
 use serde_derive::Deserialize;
 use url::Url;
@@ -50,6 +52,12 @@ pub fn url_from_date_range(user_id: &str, start: NaiveDate, end: NaiveDate) -> U
 pub struct Response {
     #[serde(rename = "activities-heart")]
     pub series: Vec<DayEntry>,
+}
+
+impl fmt::Display for Response {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:#?}", self)
+    }
 }
 
 /// A heart rate entry for a particular day.

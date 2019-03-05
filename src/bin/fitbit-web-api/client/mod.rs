@@ -73,8 +73,12 @@ pub(super) fn get_devices() {
 }
 
 pub(super) fn get_hr_time_series() {
-    // TODO
-    println!("get_hr_time_series");
+    let period = heart_rate::time_series::Period::OneDay;
+    let date = chrono::Local::today().naive_local();
+    let url = heart_rate::time_series::url_from_date_and_period("-", date, period);
+    let body = get(url);
+    let ts: heart_rate::time_series::Response = serde_json::from_str(&body).unwrap();
+    println!("{}", ts);
 }
 
 pub(super) fn get_hr_intraday_time_series() {

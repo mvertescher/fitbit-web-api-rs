@@ -8,9 +8,9 @@ pub mod time_series;
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct HeartRateZone {
-    pub calories_out: f32,
+    pub calories_out: Option<f32>,
     pub max: usize,
     pub min: usize,
-    pub minutes: usize,
+    pub minutes: Option<usize>,
     pub name: String,
 }
