@@ -1,5 +1,7 @@
 //! Intraday heart rate time series data
 
+use std::fmt;
+
 use chrono::naive::{NaiveDate, NaiveTime};
 use serde_derive::Deserialize;
 use url::Url;
@@ -30,11 +32,23 @@ pub struct Response {
     pub intraday: Intraday,
 }
 
+impl fmt::Display for Response {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:#?}", self)
+    }
+}
+
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DayEntry {
-    pub custom_heart_rate_zones: Vec<super::HeartRateZone>,
     pub date_time: NaiveDate,
+    pub value: Value,
+}
+
+#[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct Value {
+    pub custom_heart_rate_zones: Vec<super::HeartRateZone>,
     pub heart_rate_zones: Vec<super::HeartRateZone>,
     /// Resting heart rate
     pub value: Option<usize>,

@@ -82,8 +82,11 @@ pub(super) fn get_hr_time_series() {
 }
 
 pub(super) fn get_hr_intraday_time_series() {
-    // TODO
-    println!("get_hr_intraday_time_series");
+    let today = chrono::Local::today().naive_local();
+    let url = heart_rate::intraday_time_series::url_from_day(today);
+    let body = get(url);
+    let ts: heart_rate::intraday_time_series::Response = serde_json::from_str(&body).unwrap();
+    println!("{}", ts);
 }
 
 pub(super) fn get_profile() {
