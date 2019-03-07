@@ -5,8 +5,9 @@ use std::io::Write;
 use fitbit_web_api::*;
 use log::*;
 
-pub(super) mod activity;
 mod oauth;
+pub(super) mod activity;
+pub(super) mod sleep;
 
 // For now, just record the token to a file.
 const TOKEN_FILE: &str = "auth_token";

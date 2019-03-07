@@ -1,12 +1,18 @@
 //! # Sleep Goals APIs
 
+use crate::UserId;
+
 use chrono::DateTime;
 use serde_derive::Deserialize;
+use url::Url;
 
 pub mod get;
 pub mod update;
 
-pub const URL: &str = "https://api.fitbit.com/1.2/user/-/sleep/goal.json";
+/// Generate a goals endpoint URL for the user's daily sleep goals
+pub fn url(user: UserId) -> Url {
+    Url::parse(&format!("https://api.fitbit.com/1.2/user/{}/sleep/goal.json", user.to_string())).unwrap()
+}
 
 /// Information about the current sleep goal.
 #[derive(Deserialize, Debug)]

@@ -38,6 +38,8 @@ fn main() {
         Command::GetHrTimeSeries => client::get_hr_time_series(),
         Command::GetHrIntradayTimeSeries => client::get_hr_intraday_time_series(),
         Command::GetProfile => client::get_profile(),
-        _ => panic!("unsupported command"),
+        Command::GetSleepGoal => client::sleep::get_goal(),
+        Command::GetSleepList => client::sleep::get_list(),
+        Command::GetSleepLog => client::sleep::get_log(),
     }
 }
