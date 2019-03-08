@@ -12,7 +12,8 @@ pub(crate) fn get_goal() {
 }
 
 pub(crate) fn get_list() {
-    println!("TODO: Get sleep list");
+    let url = sleep::list::url(UserId::Current);
+    let _body = get(url);
 }
 
 
