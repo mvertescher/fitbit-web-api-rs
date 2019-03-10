@@ -7,6 +7,7 @@
 use std::io::{BufRead, BufReader, Write};
 use std::net::TcpListener;
 
+use oauth2::TokenResponse;
 use oauth2::basic::BasicClient;
 use oauth2::prelude::*;
 use oauth2::{AuthUrl, AuthorizationCode, ClientId, ClientSecret, CsrfToken, Scope, TokenUrl};
