@@ -8,7 +8,7 @@ A pure Rust Fitbit Web API client!
 ```
 fitbit-web-api 0.1.0
 Matt Vertescher <mvertescher@gmail.com>
-An API client for Fitbit's Web API.
+ A CLI client for Fitbit's Web API.
 
 USAGE:
     fitbit-web-api [SUBCOMMAND]
@@ -18,10 +18,14 @@ FLAGS:
     -V, --version    Prints version information
 
 SUBCOMMANDS:
-    auth       Fetch an OAuth token from Fitbit
-    badges     Prints a list of user badges
-    devices    Prints a list of currently paired devices
-    help       Prints this message or the help of the given subcommand(s)
+    activity    User activity data commands
+    auth        Fetch an OAuth token from Fitbit
+    badges      Prints a list of user badges
+    devices     Prints a list of currently paired devices
+    help        Prints this message or the help of the given subcommand(s)
+    hr          Heart rate data commands
+    profile     Print user profile information
+    sleep       Sleep data commands
 ```
 
 ## Quick Start
