@@ -1,7 +1,5 @@
 //! Fitbit Web API client
 
-#![deny(warnings)]
-
 mod args;
 mod client;
 
