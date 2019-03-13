@@ -14,9 +14,12 @@ pub(crate) fn get_goal() {
 pub(crate) fn get_list() {
     let url = sleep::list::url(UserId::Current);
     let _body = get(url);
+    // TODO: Parse response
 }
 
-
 pub(crate) fn get_log() {
-    println!("TODO: Get sleep log");
+    let date = chrono::Local::today().naive_local();
+    let url = sleep::logs::url_from_date("-", date);
+    let _body = get(url);
+    // TODO: Parse response
 }
