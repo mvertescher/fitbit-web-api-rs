@@ -60,14 +60,14 @@ pub(super) fn get_auth_token(id: String, secret: String) {
 }
 
 pub(super) fn get_badges() {
-    let url = user::badges::get::url();
+    let url = user::badges::get::url(UserId::Current);
     let body = get(url);
     let badges: user::badges::get::Response = serde_json::from_str(&body).unwrap();
     println!("{}", badges);
 }
 
 pub(super) fn get_devices() {
-    let url = devices::get::url();
+    let url = devices::get::url(UserId::Current);
     let body = get(url);
     let devices: devices::get::Response = serde_json::from_str(&body).unwrap();
     println!("{}", devices);
@@ -91,7 +91,7 @@ pub(super) fn get_hr_intraday_time_series() {
 }
 
 pub(super) fn get_profile() {
-    let url = user::profile::url();
+    let url = user::profile::url(UserId::Current);
     let body = get(url);
     let profile: user::profile::Response = serde_json::from_str(&body).unwrap();
     println!("{}", profile);

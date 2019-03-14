@@ -12,13 +12,15 @@
 
 use std::fmt;
 
+use crate::UserId;
+
 use chrono::naive::NaiveDateTime;
 use serde_derive::Deserialize;
 use url::Url;
 
 /// The URL for this endpoint.
-pub fn url() -> Url {
-    Url::parse("https://api.fitbit.com/1/user/-/devices.json").unwrap()
+pub fn url(user: UserId) -> Url {
+    Url::parse(&format!("https://api.fitbit.com/1/user/{}/devices.json", user.to_string())).unwrap()
 }
 
 impl fmt::Display for Response {

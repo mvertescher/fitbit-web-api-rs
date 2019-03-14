@@ -2,6 +2,8 @@
 
 use std::fmt;
 
+use crate::UserId;
+
 use chrono::naive::NaiveDate;
 use serde_derive::{Deserialize, Serialize};
 use url::Url;
@@ -9,8 +11,8 @@ use url::Url;
 pub mod update;
 
 /// The URL for this endpoint.
-pub fn url() -> Url {
-    Url::parse("https://api.fitbit.com/1/user/-/profile.json").unwrap()
+pub fn url(user: UserId) -> Url {
+    Url::parse(&format!("https://api.fitbit.com/1/user/{}/profile.json", user.to_string())).unwrap()
 }
 
 /// A user profile response from a GET or POST request.
