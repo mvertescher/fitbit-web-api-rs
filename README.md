@@ -36,6 +36,10 @@ To use this client, you must have a few things:
   - To access the most personal information, set the `OAuth 2.0 Application Type` to `Personal`
 3. The OAuth2 `CLIENT_ID` and `CLIENT_SECRET` of [your app found here](https://dev.fitbit.com/apps)
 
+## Resources
+
+[The Officai Fitbit Web API Reference](http://dev.fitbit.com/build/reference/web-api/)
+
 ## License
 
 Licensed under either of
