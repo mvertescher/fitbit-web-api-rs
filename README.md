@@ -38,7 +38,7 @@ To use this client, you must have a few things:
 
 ## Resources
 
-[The Officai Fitbit Web API Reference](http://dev.fitbit.com/build/reference/web-api/)
+[The Official Fitbit Web API Reference](http://dev.fitbit.com/build/reference/web-api/)
 
 ## License
 
