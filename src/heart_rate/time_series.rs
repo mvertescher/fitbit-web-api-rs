@@ -2,6 +2,8 @@
 
 use std::fmt;
 
+use crate::UserId;
+
 use chrono::naive::NaiveDate;
 use serde_derive::Deserialize;
 use url::Url;
@@ -28,10 +30,10 @@ impl ToString for Period {
 }
 
 /// Generate the request URL from a date and a period.
-pub fn url_from_date_and_period(user_id: &str, start: NaiveDate, period: Period) -> Url {
+pub fn url_from_date_and_period(user: &UserId, start: NaiveDate, period: Period) -> Url {
     Url::parse(&format!(
         "https://api.fitbit.com/1/user/{}/activities/heart/date/{}/{}.json",
-        user_id,
+        user.to_string(),
         start,
         &period.to_string()
     ))
@@ -39,10 +41,10 @@ pub fn url_from_date_and_period(user_id: &str, start: NaiveDate, period: Period)
 }
 
 /// Generate the request URL from a start date and end date.
-pub fn url_from_date_range(user_id: &str, start: NaiveDate, end: NaiveDate) -> Url {
+pub fn url_from_date_range(user: &UserId, start: NaiveDate, end: NaiveDate) -> Url {
     Url::parse(&format!(
         "https://api.fitbit.com/1/user/{}/activities/heart/date/{}/{}.json",
-        user_id, start, end
+        user.to_string(), start, end
     ))
     .unwrap()
 }

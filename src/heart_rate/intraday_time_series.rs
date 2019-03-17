@@ -2,25 +2,28 @@
 
 use std::fmt;
 
+use crate::UserId;
+
 use chrono::naive::{NaiveDate, NaiveTime};
 use serde_derive::Deserialize;
 use url::Url;
 
 /// Build the URL for today.
-pub fn url_from_today() -> Url {
-    Url::parse("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec.json").unwrap()
+pub fn url_from_today(user: &UserId) -> Url {
+    Url::parse(&format!("https://api.fitbit.com/1/user/{}/activities/heart/date/today/1d/1sec.json",
+                       user.to_string())).unwrap()
 }
 
 /// Build the URL for the current user and a given date range.
-pub fn url_from_day(date: NaiveDate) -> Url {
-    Url::parse(&format!("https://api.fitbit.com/1/user/-/activities/heart/date/{}/1d/1sec.json",
-                        date)).unwrap()
+pub fn url_from_day(user: &UserId, date: NaiveDate) -> Url {
+    Url::parse(&format!("https://api.fitbit.com/1/user/{}/activities/heart/date/{}/1d/1sec.json",
+                        user.to_string(), date)).unwrap()
 }
 
 /// Build the URL for the current user and a given date range.
-pub fn url_from_date_range(start: NaiveDate, end: NaiveDate) -> Url {
-    Url::parse(&format!("https://api.fitbit.com/1/user/-/activities/heart/date/{}/{}/1sec.json",
-                        start, end)).unwrap()
+pub fn url_from_date_range(user: &UserId, start: NaiveDate, end: NaiveDate) -> Url {
+    Url::parse(&format!("https://api.fitbit.com/1/user/{}/activities/heart/date/{}/{}/1sec.json",
+                        user.to_string(), start, end)).unwrap()
 }
 
 /// Heart rate zones time series response.
