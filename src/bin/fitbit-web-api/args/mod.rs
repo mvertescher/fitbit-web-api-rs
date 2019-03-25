@@ -7,6 +7,7 @@ use clap::{App, SubCommand};
 
 mod activity;
 mod auth;
+mod body;
 mod heart_rate;
 mod sleep;
 
@@ -23,6 +24,7 @@ pub(super) fn parse() -> super::Command {
         .subcommand(auth::app())
         .subcommand(SubCommand::with_name(BADGES)
                     .about("Prints a list of user badges"))
+        .subcommand(body::app())
         .subcommand(SubCommand::with_name("devices")
                     .about("Prints a list of currently paired devices"))
         .subcommand(heart_rate::app())
