@@ -37,6 +37,7 @@ pub(super) fn parse() -> super::Command {
         (activity::BASE, Some(m)) => activity::get_command(m),
         (auth::BASE, Some(m)) => auth::get_command(m),
         (BADGES, Some(_)) => Command::GetBadges,
+        (body::BASE, Some(m)) => body::get_command(m),
         (DEVICES, Some(_)) => Command::GetDevices,
         (heart_rate::BASE, Some(m)) => heart_rate::get_command(m),
         (PROFILE, Some(_)) => Command::GetProfile,

@@ -23,3 +23,14 @@ pub(super) fn app() -> App<'static, 'static> {
         .subcommand(SubCommand::with_name(BASE_WEIGHT_LOGS)
             .about("Print the user's body weight logs"))
 }
+
+pub(super) fn get_command(matches: &ArgMatches) -> Command {
+    match matches.subcommand() {
+        (BASE_FAT_LOGS, _) => Command::GetBodyFatLogs,
+        (BASE_GOALS, _) => Command::GetBodyGoals,
+        (BASE_TIME_SERIES, _) => Command::GetBodyTimeSeries,
+        (BASE_WEIGHT_LOGS, _) => Command::GetBodyWeightLogs,
+        ("", None) => super::invalid_command_exit(),
+        _ => unreachable!(),
+    }
+}

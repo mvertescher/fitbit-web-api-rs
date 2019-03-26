@@ -7,6 +7,7 @@ use log::*;
 
 mod oauth;
 pub(super) mod activity;
+pub(super) mod body;
 pub(super) mod heart_rate;
 pub(super) mod sleep;
 
