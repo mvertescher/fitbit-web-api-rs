@@ -10,13 +10,7 @@
 
 #![deny(warnings)]
 
-extern crate chrono;
-extern crate serde;
-extern crate serde_derive;
-extern crate serde_json;
-extern crate url_serde;
-
-use serde_derive::Deserialize;
+use serde::Deserialize;
 
 pub mod activity;
 pub mod body;

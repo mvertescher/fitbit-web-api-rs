@@ -5,7 +5,7 @@ use std::fmt;
 use crate::UserId;
 
 use chrono::naive::NaiveDate;
-use serde_derive::Deserialize;
+use serde::Deserialize;
 use url::Url;
 
 /// The URL for this endpoint.
@@ -38,15 +38,10 @@ pub struct Badge {
     pub description: String,
     pub earned_message: Option<String>,
     pub encoded_id: String,
-    #[serde(with = "url_serde")]
     pub image100px: Url,
-    #[serde(with = "url_serde")]
     pub image125px: Url,
-    #[serde(with = "url_serde")]
     pub image300px: Url,
-    #[serde(with = "url_serde")]
     pub image50px: Url,
-    #[serde(with = "url_serde")]
     pub image75px: Url,
     pub name: String,
     pub share_text: String,

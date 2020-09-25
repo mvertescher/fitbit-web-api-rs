@@ -9,18 +9,22 @@ use std::net::TcpListener;
 
 use oauth2::TokenResponse;
 use oauth2::basic::BasicClient;
-use oauth2::prelude::*;
+use oauth2::reqwest::http_client;
+use oauth2::url::Url;
 use oauth2::{AuthUrl, AuthorizationCode, ClientId, ClientSecret, CsrfToken, Scope, TokenUrl};
-use url::Url;
 
 /// Get a token via the OAuth 2.0 Implicit Grant Flow
 pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
-    let client_id = ClientId::new(client_id);
-    let client_secret = ClientSecret::new(client_secret);
-    let auth_url = AuthUrl::new(Url::parse("https://www.fitbit.com/oauth2/authorize").unwrap());
-    let token_url = TokenUrl::new(Url::parse("https://api.fitbit.com/oauth2/token").unwrap());
 
-    let client = BasicClient::new(client_id, Some(client_secret), auth_url, Some(token_url))
+    let client = BasicClient::new(
+        ClientId::new(client_id),
+        Some(ClientSecret::new(client_secret)),
+        AuthUrl::new("https://www.fitbit.com/oauth2/authorize".to_string()).unwrap(),
+        Some(TokenUrl::new("https://api.fitbit.com/oauth2/token".to_string()).unwrap()),
+    );
+
+    // Generate the authorization URL to which we'll redirect the user.
+    let (authorize_url, csrf_state) = client.authorize_url(CsrfToken::new_random)
         .add_scope(Scope::new("activity".to_string()))
         .add_scope(Scope::new("heartrate".to_string()))
         .add_scope(Scope::new("location".to_string()))
@@ -29,10 +33,9 @@ pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
         .add_scope(Scope::new("settings".to_string()))
         .add_scope(Scope::new("sleep".to_string()))
         .add_scope(Scope::new("social".to_string()))
-        .add_scope(Scope::new("weight".to_string()));
+        .add_scope(Scope::new("weight".to_string()))
+        .url();
 
-    // Generate the authorization URL to which we'll redirect the user.
-    let (authorize_url, csrf_state) = client.authorize_url(CsrfToken::new_random);
     opener::open(authorize_url.to_string())
         .expect("failed to open authorize URL");
 
@@ -86,7 +89,7 @@ pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
                        "CSRF state mismatch. Malicious actor?");
 
             // Exchange the code with a token.
-            let token = match client.exchange_code(code) {
+            let token = match client.exchange_code(code).request(http_client) {
                 Ok(t) => t,
                 Err(e) => {
                     log::error!("OAuth2: {}", e);
@@ -99,5 +102,5 @@ pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
         }
     }
 
-   unreachable!();
+    unreachable!();
 }

@@ -5,7 +5,7 @@ use std::fmt;
 use crate::UserId;
 
 use chrono::naive::NaiveDate;
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 use url::Url;
 
 pub mod update;
@@ -37,11 +37,8 @@ pub struct User {
     pub age: usize,
     pub ambassador: bool,
     pub auto_stride_enabled: Option<bool>,
-    #[serde(with = "url_serde")]
     pub avatar: Url,
-    #[serde(with = "url_serde")]
     pub avatar150: Url,
-    #[serde(with = "url_serde")]
     pub avatar640: Url,
     pub average_daily_steps: usize,
     pub clock_time_display_format: ClockTimeDisplayFormat,

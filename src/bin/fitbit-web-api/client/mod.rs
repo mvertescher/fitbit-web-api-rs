@@ -29,13 +29,13 @@ fn read_auth_token() -> String {
     }
 }
 
-fn get(url: url::Url) -> String {
+async fn get(url: url::Url) -> String {
     let token: String = read_auth_token();
 
     let client = reqwest::Client::new();
     info!("GET {:?}", url);
 
-    let mut res = client.get(url).bearer_auth(token).send().unwrap();
+    let mut res = client.get(url).bearer_auth(token).send().await.unwrap();
     let status = res.status();
     if !status.is_success() {
         eprintln!("Bad HTTP status code: {}", status);
@@ -48,7 +48,7 @@ fn get(url: url::Url) -> String {
         std::process::exit(1);
     };
 
-    let body = res.text().unwrap();
+    let body = res.text().await.unwrap();
     let v: serde_json::Value = serde_json::from_str(&body).unwrap();
     info!("{:?}", v);
 
@@ -61,23 +61,23 @@ pub(super) fn get_auth_token(id: String, secret: String) {
     println!("Success! OAuth2 token recorded to {}.", TOKEN_FILE);
 }
 
-pub(super) fn get_badges() {
+pub(super) async fn get_badges() {
     let url = user::badges::get::url(UserId::Current);
-    let body = get(url);
+    let body = get(url).await;
     let badges: user::badges::get::Response = serde_json::from_str(&body).unwrap();
     println!("{}", badges);
 }
 
-pub(super) fn get_devices() {
+pub(super) async fn get_devices() {
     let url = devices::get::url(UserId::Current);
-    let body = get(url);
+    let body = get(url).await;
     let devices: devices::get::Response = serde_json::from_str(&body).unwrap();
     println!("{}", devices);
 }
 
-pub(super) fn get_profile() {
+pub(super) async fn get_profile() {
     let url = user::profile::url(UserId::Current);
-    let body = get(url);
+    let body = get(url).await;
     let profile: user::profile::Response = serde_json::from_str(&body).unwrap();
     println!("{}", profile);
 }

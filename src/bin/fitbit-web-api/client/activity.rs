@@ -4,16 +4,16 @@ use super::get;
 
 use fitbit_web_api::*;
 
-pub(crate) fn get_goals() {
+pub(crate) async fn get_goals() {
     let url = activity::goals::url();
-    let body = get(url);
+    let body = get(url).await;
     let response: activity::goals::Response = serde_json::from_str(&body).unwrap();
     println!("{}", response);
 }
 
-pub(crate) fn get_lifetime_stats() {
+pub(crate) async fn get_lifetime_stats() {
     let url = activity::lifetime_stats::url(UserId::Current);
-    let body = get(url);
+    let body = get(url).await;
     let response: activity::lifetime_stats::Response = serde_json::from_str(&body).unwrap();
     println!("{}", response);
 }
@@ -25,11 +25,11 @@ macro_rules! display_resource {
     }};
 }
 
-pub(crate) fn get_time_series(resource: activity::time_series::Resource) {
+pub(crate) async fn get_time_series(resource: activity::time_series::Resource) {
     use activity::time_series::Resource;
     let url = activity::time_series::url_from_date_and_period(UserId::Current, &resource,
             chrono::Local::today().naive_local(), Period::OneDay);
-    let body = get(url);
+    let body = get(url).await;
     match resource {
         Resource::Calories => display_resource!(calories, body),
         Resource::CaloriesBMR =>  display_resource!(calories_bmr, body),
@@ -45,9 +45,9 @@ pub(crate) fn get_time_series(resource: activity::time_series::Resource) {
     };
 }
 
-pub(crate) fn get_summary() {
+pub(crate) async fn get_summary() {
     let url = activity::summary::url_from_date("-", chrono::Local::today().naive_local());
-    let body = get(url);
+    let body = get(url).await;
     let response: activity::summary::Response = serde_json::from_str(&body).unwrap();
     println!("{}", response);
 }
