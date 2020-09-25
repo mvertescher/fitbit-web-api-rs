@@ -1,9 +1,5 @@
 //! Client for the body endpoints
 
-use super::get;
-
-use fitbit_web_api::*;
-
 pub(crate) fn get_fat_logs() {
     // TODO
 }

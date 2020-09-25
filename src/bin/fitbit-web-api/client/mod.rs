@@ -38,7 +38,7 @@ async fn get(url: url::Url) -> String {
     let client = reqwest::Client::new();
     info!("GET {:?}", url);
 
-    let mut res = client.get(url).bearer_auth(token).send().await.unwrap();
+    let res = client.get(url).bearer_auth(token).send().await.unwrap();
     let status = res.status();
     if !status.is_success() {
         eprintln!("Bad HTTP status code: {}", status);
