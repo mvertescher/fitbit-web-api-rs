@@ -2,7 +2,7 @@
 
 use crate::Command;
 
-use clap::{App, ArgMatches, SubCommand, AppSettings};
+use clap::{App, AppSettings, ArgMatches, SubCommand};
 
 pub(super) const BASE: &'static str = "body";
 pub(super) const BASE_FAT_LOGS: &'static str = "fat";
@@ -14,14 +14,14 @@ pub(super) fn app() -> App<'static, 'static> {
     App::new(BASE)
         .about("Sleep data commands")
         .setting(AppSettings::SubcommandRequiredElseHelp)
-        .subcommand(SubCommand::with_name(BASE_FAT_LOGS)
-            .about("Print the user's body fat logs"))
-        .subcommand(SubCommand::with_name(BASE_GOALS)
-            .about("Print the user's body goals"))
-        .subcommand(SubCommand::with_name(BASE_TIME_SERIES)
-            .about("Print the user's body time series data"))
-        .subcommand(SubCommand::with_name(BASE_WEIGHT_LOGS)
-            .about("Print the user's body weight logs"))
+        .subcommand(SubCommand::with_name(BASE_FAT_LOGS).about("Print the user's body fat logs"))
+        .subcommand(SubCommand::with_name(BASE_GOALS).about("Print the user's body goals"))
+        .subcommand(
+            SubCommand::with_name(BASE_TIME_SERIES).about("Print the user's body time series data"),
+        )
+        .subcommand(
+            SubCommand::with_name(BASE_WEIGHT_LOGS).about("Print the user's body weight logs"),
+        )
 }
 
 pub(super) fn get_command(matches: &ArgMatches) -> Command {

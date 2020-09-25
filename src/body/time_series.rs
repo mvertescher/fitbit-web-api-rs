@@ -19,30 +19,32 @@ pub enum Resource {
 #[derive(Debug, PartialEq, ToString)]
 #[strum(serialize_all = "snake_case")]
 pub enum Period {
-    #[strum(serialize="1d")]
+    #[strum(serialize = "1d")]
     OneDay,
-    #[strum(serialize="7d")]
+    #[strum(serialize = "7d")]
     SevenDays,
-    #[strum(serialize="30d")]
+    #[strum(serialize = "30d")]
     ThirtyDays,
-    #[strum(serialize="1w")]
+    #[strum(serialize = "1w")]
     OneWeek,
-    #[strum(serialize="1m")]
+    #[strum(serialize = "1m")]
     OneMonth,
-    #[strum(serialize="3m")]
+    #[strum(serialize = "3m")]
     ThreeMonths,
-    #[strum(serialize="6m")]
+    #[strum(serialize = "6m")]
     SixMonths,
-    #[strum(serialize="1y")]
+    #[strum(serialize = "1y")]
     OneYear,
     Max,
 }
 
 /// Generate the request URL from a resource, start date and period.
-pub fn url_from_date_and_period(user_id: UserId, resource: &Resource, start: NaiveDate,
-                                period: Period)
-    -> Url
-{
+pub fn url_from_date_and_period(
+    user_id: UserId,
+    resource: &Resource,
+    start: NaiveDate,
+    period: Period,
+) -> Url {
     Url::parse(&format!(
         "https://api.fitbit.com/1/user/{}/body/{}/date/{}/{}.json",
         &user_id.to_string(),
@@ -54,10 +56,12 @@ pub fn url_from_date_and_period(user_id: UserId, resource: &Resource, start: Nai
 }
 
 /// Generate the request URL from a start date and end date.
-pub fn url_from_dates(user_id: UserId, resource: &Resource, start: NaiveDate,
-                      end: NaiveDate)
-    -> Url
-{
+pub fn url_from_dates(
+    user_id: UserId,
+    resource: &Resource,
+    start: NaiveDate,
+    end: NaiveDate,
+) -> Url {
     Url::parse(&format!(
         "https://api.fitbit.com/1/user/{}/body/{}/date/{}/{}.json",
         &user_id.to_string(),

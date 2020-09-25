@@ -20,7 +20,11 @@ use url::Url;
 
 /// The URL for this endpoint.
 pub fn url(user: UserId) -> Url {
-    Url::parse(&format!("https://api.fitbit.com/1/user/{}/devices.json", user.to_string())).unwrap()
+    Url::parse(&format!(
+        "https://api.fitbit.com/1/user/{}/devices.json",
+        user.to_string()
+    ))
+    .unwrap()
 }
 
 impl fmt::Display for Response {

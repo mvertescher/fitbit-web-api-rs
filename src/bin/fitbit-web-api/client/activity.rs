@@ -20,19 +20,24 @@ pub(crate) async fn get_lifetime_stats() {
 
 macro_rules! display_resource {
     ($resource:ident, $body:ident) => {{
-        let response: activity::time_series::$resource::Response = serde_json::from_str(&$body).unwrap();
+        let response: activity::time_series::$resource::Response =
+            serde_json::from_str(&$body).unwrap();
         println!("{}", response);
     }};
 }
 
 pub(crate) async fn get_time_series(resource: activity::time_series::Resource) {
     use activity::time_series::Resource;
-    let url = activity::time_series::url_from_date_and_period(UserId::Current, &resource,
-            chrono::Local::today().naive_local(), Period::OneDay);
+    let url = activity::time_series::url_from_date_and_period(
+        UserId::Current,
+        &resource,
+        chrono::Local::today().naive_local(),
+        Period::OneDay,
+    );
     let body = get(url).await;
     match resource {
         Resource::Calories => display_resource!(calories, body),
-        Resource::CaloriesBMR =>  display_resource!(calories_bmr, body),
+        Resource::CaloriesBMR => display_resource!(calories_bmr, body),
         Resource::Steps => display_resource!(steps, body),
         Resource::Distance => display_resource!(distance, body),
         Resource::Floors => display_resource!(floors, body),

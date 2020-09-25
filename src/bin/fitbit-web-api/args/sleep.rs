@@ -2,7 +2,7 @@
 
 use crate::Command;
 
-use clap::{App, ArgMatches, SubCommand, AppSettings};
+use clap::{App, AppSettings, ArgMatches, SubCommand};
 
 pub(super) const BASE: &'static str = "sleep";
 pub(super) const BASE_GOAL: &'static str = "goal";
@@ -13,12 +13,11 @@ pub(super) fn app() -> App<'static, 'static> {
     App::new(BASE)
         .about("Sleep data commands")
         .setting(AppSettings::SubcommandRequiredElseHelp)
-        .subcommand(SubCommand::with_name(BASE_GOAL)
-            .about("Print the user's current sleep goal"))
-        .subcommand(SubCommand::with_name(BASE_LIST)
-            .about("Print the user's list of sleep logs"))
-        .subcommand(SubCommand::with_name(BASE_LOG)
-            .about("Print the user's sleep log for the past week"))
+        .subcommand(SubCommand::with_name(BASE_GOAL).about("Print the user's current sleep goal"))
+        .subcommand(SubCommand::with_name(BASE_LIST).about("Print the user's list of sleep logs"))
+        .subcommand(
+            SubCommand::with_name(BASE_LOG).about("Print the user's sleep log for the past week"),
+        )
 }
 
 pub(super) fn get_command(matches: &ArgMatches) -> Command {

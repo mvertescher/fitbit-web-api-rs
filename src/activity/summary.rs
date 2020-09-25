@@ -10,8 +10,7 @@ use url::Url;
 pub fn url_from_date(user_id: &str, date: NaiveDate) -> Url {
     Url::parse(&format!(
         "https://api.fitbit.com/1/user/{}/activities/date/{}.json",
-        user_id,
-        date,
+        user_id, date,
     ))
     .unwrap()
 }

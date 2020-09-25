@@ -7,15 +7,14 @@
 use std::io::{BufRead, BufReader, Write};
 use std::net::TcpListener;
 
-use oauth2::TokenResponse;
 use oauth2::basic::BasicClient;
 use oauth2::reqwest::http_client;
 use oauth2::url::Url;
+use oauth2::TokenResponse;
 use oauth2::{AuthUrl, AuthorizationCode, ClientId, ClientSecret, CsrfToken, Scope, TokenUrl};
 
 /// Get a token via the OAuth 2.0 Implicit Grant Flow
 pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
-
     let client = BasicClient::new(
         ClientId::new(client_id),
         Some(ClientSecret::new(client_secret)),
@@ -24,7 +23,8 @@ pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
     );
 
     // Generate the authorization URL to which we'll redirect the user.
-    let (authorize_url, csrf_state) = client.authorize_url(CsrfToken::new_random)
+    let (authorize_url, csrf_state) = client
+        .authorize_url(CsrfToken::new_random)
         .add_scope(Scope::new("activity".to_string()))
         .add_scope(Scope::new("heartrate".to_string()))
         .add_scope(Scope::new("location".to_string()))
@@ -36,8 +36,7 @@ pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
         .add_scope(Scope::new("weight".to_string()))
         .url();
 
-    opener::open(authorize_url.to_string())
-        .expect("failed to open authorize URL");
+    opener::open(authorize_url.to_string()).expect("failed to open authorize URL");
 
     let listener = TcpListener::bind("127.0.0.1:8080").unwrap();
     for stream in listener.incoming() {
@@ -85,8 +84,11 @@ pub(crate) fn get_token(client_id: String, client_secret: String) -> String {
             stream.write_all(response.as_bytes()).unwrap();
 
             // Verify that the state we generated matches the one the server sent us.
-            assert_eq!(csrf_state.secret(), state.secret(),
-                       "CSRF state mismatch. Malicious actor?");
+            assert_eq!(
+                csrf_state.secret(),
+                state.secret(),
+                "CSRF state mismatch. Malicious actor?"
+            );
 
             // Exchange the code with a token.
             let token = match client.exchange_code(code).request(http_client) {

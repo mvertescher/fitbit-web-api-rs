@@ -44,7 +44,9 @@ pub fn url_from_date_and_period(user: &UserId, start: NaiveDate, period: Period)
 pub fn url_from_date_range(user: &UserId, start: NaiveDate, end: NaiveDate) -> Url {
     Url::parse(&format!(
         "https://api.fitbit.com/1/user/{}/activities/heart/date/{}/{}.json",
-        user.to_string(), start, end
+        user.to_string(),
+        start,
+        end
     ))
     .unwrap()
 }

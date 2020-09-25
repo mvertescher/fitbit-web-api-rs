@@ -36,8 +36,7 @@ pub struct Response {
 /// There can be multiple entries per day.
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct SleepEntry {
-}
+pub struct SleepEntry {}
 
 /// A sleep summary.
 #[derive(Deserialize, Debug)]

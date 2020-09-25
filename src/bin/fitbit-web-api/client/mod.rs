@@ -5,10 +5,10 @@ use std::io::Write;
 use fitbit_web_api::*;
 use log::*;
 
-mod oauth;
 pub(super) mod activity;
 pub(super) mod body;
 pub(super) mod heart_rate;
+mod oauth;
 pub(super) mod sleep;
 
 // For now, just record the token to a file.
@@ -23,7 +23,10 @@ fn read_auth_token() -> String {
     match std::fs::read_to_string(TOKEN_FILE) {
         Ok(token) => token,
         Err(e) => {
-            eprintln!("Failed to read the auth token ({})\nHave you run the `auth` command?", e);
+            eprintln!(
+                "Failed to read the auth token ({})\nHave you run the `auth` command?",
+                e
+            );
             std::process::exit(1);
         }
     }
@@ -40,7 +43,7 @@ async fn get(url: url::Url) -> String {
     if !status.is_success() {
         eprintln!("Bad HTTP status code: {}", status);
         match status {
-            reqwest::StatusCode::UNAUTHORIZED =>  {
+            reqwest::StatusCode::UNAUTHORIZED => {
                 eprintln!("Check that your API token is correct?");
             }
             _ => (),

@@ -12,7 +12,11 @@ pub mod update;
 
 /// The URL for this endpoint.
 pub fn url(user: UserId) -> Url {
-    Url::parse(&format!("https://api.fitbit.com/1/user/{}/profile.json", user.to_string())).unwrap()
+    Url::parse(&format!(
+        "https://api.fitbit.com/1/user/{}/profile.json",
+        user.to_string()
+    ))
+    .unwrap()
 }
 
 /// A user profile response from a GET or POST request.

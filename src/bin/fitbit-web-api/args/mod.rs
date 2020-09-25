@@ -2,7 +2,7 @@
 
 use super::Command;
 
-use clap::{crate_name, crate_description, crate_version, crate_authors};
+use clap::{crate_authors, crate_description, crate_name, crate_version};
 use clap::{App, SubCommand};
 
 mod activity;
@@ -22,14 +22,13 @@ pub(super) fn parse() -> super::Command {
         .author(crate_authors!())
         .subcommand(activity::app())
         .subcommand(auth::app())
-        .subcommand(SubCommand::with_name(BADGES)
-                    .about("Prints a list of user badges"))
+        .subcommand(SubCommand::with_name(BADGES).about("Prints a list of user badges"))
         .subcommand(body::app())
-        .subcommand(SubCommand::with_name("devices")
-                    .about("Prints a list of currently paired devices"))
+        .subcommand(
+            SubCommand::with_name("devices").about("Prints a list of currently paired devices"),
+        )
         .subcommand(heart_rate::app())
-        .subcommand(SubCommand::with_name(PROFILE)
-                    .about("Print user profile information"))
+        .subcommand(SubCommand::with_name(PROFILE).about("Print user profile information"))
         .subcommand(sleep::app())
         .get_matches();
 

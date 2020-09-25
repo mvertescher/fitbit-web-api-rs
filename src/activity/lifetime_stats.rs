@@ -64,9 +64,9 @@ pub struct LifetimeStatsSet {
 mod tests {
     use super::*;
 
-	#[test]
+    #[test]
     fn deserialize() {
-		let data = r#"
+        let data = r#"
 {
     "best":{
         "total":{
@@ -114,5 +114,5 @@ mod tests {
 		"#;
 
         let _res: Response = serde_json::from_str(data).unwrap();
-	}
+    }
 }

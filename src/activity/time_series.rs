@@ -1,6 +1,6 @@
 //! Get activity time series data.
 
-use crate::{UserId, Period};
+use crate::{Period, UserId};
 
 use chrono::naive::NaiveDate;
 use serde_derive::Deserialize;
@@ -11,29 +11,31 @@ use url::Url;
 #[strum(serialize_all = "snake_case")]
 pub enum Resource {
     Calories,
-    #[strum(serialize="caloriesBMR")]
+    #[strum(serialize = "caloriesBMR")]
     CaloriesBMR,
     Steps,
     Distance,
     Floors,
     Elevation,
-    #[strum(serialize="minutesSedentary")]
+    #[strum(serialize = "minutesSedentary")]
     Sedentary,
-    #[strum(serialize="minutesLightlyActive")]
+    #[strum(serialize = "minutesLightlyActive")]
     LightlyActive,
-    #[strum(serialize="minutesFairlyActive")]
+    #[strum(serialize = "minutesFairlyActive")]
     FairlyActive,
-    #[strum(serialize="minutesVeryActive")]
+    #[strum(serialize = "minutesVeryActive")]
     VeryActive,
-    #[strum(serialize="activityCalories")]
+    #[strum(serialize = "activityCalories")]
     ActivityCalories,
 }
 
 /// Generate the request URL from a resource.
-pub fn url_from_date_and_period(user_id: UserId, resource: &Resource, start: NaiveDate,
-                                period: Period)
-    -> Url
-{
+pub fn url_from_date_and_period(
+    user_id: UserId,
+    resource: &Resource,
+    start: NaiveDate,
+    period: Period,
+) -> Url {
     Url::parse(&format!(
         "https://api.fitbit.com/1/user/{}/activities/{}/date/{}/{}.json",
         &user_id.to_string(),
