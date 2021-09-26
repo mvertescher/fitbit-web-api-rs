@@ -45,6 +45,9 @@ async fn get(url: url::Url) -> String {
         match status {
             reqwest::StatusCode::UNAUTHORIZED => {
                 eprintln!("Check that your API token is correct?");
+            },
+            reqwest::StatusCode::BAD_REQUEST => {
+                eprintln!("Error: {}", res.text().await.unwrap())
             }
             _ => (),
         };

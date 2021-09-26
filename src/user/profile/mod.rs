@@ -48,7 +48,7 @@ pub struct User {
     pub clock_time_display_format: ClockTimeDisplayFormat,
     pub corporate: bool,
     pub corporate_admin: bool,
-    pub country: String,
+    pub country: Option<String>,
     pub date_of_birth: NaiveDate,
     pub display_name: String,
     pub display_name_setting: String,
